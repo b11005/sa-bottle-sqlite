@@ -44,7 +44,7 @@ class Book(Base):
 
     id = Column(Integer, primary_key = True)
     title = Column(Unicode(100), nullable = False)
-    prime = Column(Integer, nullable = False)
+    price = Column(Integer, nullable = False)
     memo = Column(UnicodeText)
     created_at = Column(DateTime, default = datetime.now)
 
@@ -55,8 +55,8 @@ class Book(Base):
 # フォーム定義と入力チェック
 class BookForm(Form):
 
-    title = StirngField(u'タイトル', [
-        validators.required(message = u'入力してください')
+    title = StringField(u'タイトル', [
+        validators.required(message = u'入力してください'),
         validators.length(min = 1, max = 100, message = u'入力してください')
     ])
 
@@ -130,11 +130,9 @@ def update(db, id):
 
     if form.validate():
 
-        book = Book(
-            book.title = form.title.data,
-            book.price = form.price.data,
-            book.memo = form.memo.data
-        )
+        book.title = form.title.data
+        book.price = form.price.data
+        book.memo = form.memo.data
 
         redirect("/books")
 
@@ -150,7 +148,7 @@ def destroy(db, id):
         return HTTPError(404, u'書籍が見つかりません')
 
     db.delete(book)
-    redirect("./books")
+    redirect("/books")
 
 if __name__ == '__main__':
     run(host = 'localhost', port = 8080, debug = True, reloader = True)
