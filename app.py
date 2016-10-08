@@ -2,7 +2,7 @@
 
 # ４種類のパッケージを入れる & 設定
 # datetime
-form datetime import datetime
+from datetime import datetime
 
 # bottle関係
 import bottle
@@ -151,3 +151,6 @@ def destroy(db, id):
 
     db.delete(book)
     redirect("./books")
+
+if __name__ == '__main__':
+    run(host = 'localhost', port = 8080, debug = True, reloader = True)
