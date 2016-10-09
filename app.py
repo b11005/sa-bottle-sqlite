@@ -5,10 +5,12 @@
 from datetime import datetime
 
 # bottle関係
+import os
 import bottle
 from bottle import get, post, run
 from bottle import request, template, redirect
 from bottle import HTTPError
+from bottle import static_file
 
 # sqlalchemy関係
 from sqlalchemy import create_engine, Column, Integer, Unicode, DateTime, UnicodeText
@@ -77,6 +79,7 @@ def new(db):
     form = BookForm()
     return template('edit', form = form, request = request)
 
+
 # 登録用のGET / POST
 @post('/books/add')
 def create(db):
@@ -97,11 +100,13 @@ def create(db):
     else:
         return template('edit', form = form, request = request)
 
+
 @get('/books')
 def index(db):
 
     books = db.query(Book).all()
     return template('index', books = books, request = request)
+
 
 # 編集用のGET / POST
 @get('/books/<id:int>/edit')
@@ -116,6 +121,7 @@ def edit(db, id):
     form = BookForm(request.POST, book)
 
     return template('edit', book = book, form = form, request = request)
+
 
 @post('/books/<id:int>/edit')
 def update(db, id):
@@ -139,6 +145,7 @@ def update(db, id):
     else:
         return template('edit', form = form, request = request)
 
+
 @post('/books/<id:int>/delete')
 def destroy(db, id):
 
@@ -149,6 +156,15 @@ def destroy(db, id):
 
     db.delete(book)
     redirect("/books")
+
+
+# CSSやJS等の静的ファイルのルーティング
+# 基準のディレクトリをosで指定しないと参照できない！
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+@get('/css/<filename>')
+def css_dir(filename):
+    return static_file(filename, root = BASE_DIR + "/static/css")
 
 if __name__ == '__main__':
     run(host = 'localhost', port = 8080, debug = True, reloader = True)
