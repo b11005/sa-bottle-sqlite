@@ -1,6 +1,9 @@
 /* サイドバーactive時の反転 */
 .active {
   background: black;
+}
+
+.active > a {
   color: white;
   font-weight: bold;
 }
