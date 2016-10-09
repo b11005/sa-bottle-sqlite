@@ -1,5 +1,6 @@
-# sa-bottle-sqlite
-技術評論社『Pythonエンジニア要請読本』をいじる
+# Bottle, SQLite, SQLAlchemy(ORM)を使ってアプリケーションを作る
 
-このアプリケーションについては以下のファイルを参照のこと → 
+*目的：技術評論社『Pythonエンジニア要請読本』をいじる*
+
+このアプリケーションについては右記のファイルを参照のこと → 
 [index.rst](https://github.com/sasaken555/sa-bottle-sqlite/blob/master/index.rst)
