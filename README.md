@@ -1,4 +1,4 @@
-# Bottle, SQLite, SQLAlchemy(ORM)を使ってアプリケーションを作る
+# Bottle, SQLite, SQLAlchemy(ORM)を使ってアプリを作る
 
 *目的：技術評論社『Pythonエンジニア要請読本』をいじる*
 
