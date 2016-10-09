@@ -1,4 +1,8 @@
 # -*- coding: UTF-8 -*-
+# GitHubへのコミットのテスト用
+# 本筋とは関係ないので無視してOK
+# You can ignore this file because the file is posted in test.
+
 from bottle import route, run, template
 
 @route('/')
