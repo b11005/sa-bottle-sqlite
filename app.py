@@ -61,18 +61,16 @@ class BookForm(Form):
         validators.required(message = u'入力してください'),
         validators.length(min = 1, max = 100, message = u'入力してください')
     ])
-
     price = IntegerField(u'価格', [
         validators.required(message = u'数値で入力してください')
     ])
-
     memo = TextAreaField(u'メモ', [
         validators.required(message = u'入力してください')
     ])
 
 
 # ルーティング定義
-# 一覧用のGET
+# 登録用のGET / POST
 @get('/books/add')
 def new(db):
 
@@ -80,27 +78,24 @@ def new(db):
     return template('edit', form = form, request = request)
 
 
-# 登録用のGET / POST
 @post('/books/add')
 def create(db):
 
     form = BookForm(request.forms.decode())
 
     if form.validate():
-
         book = Book(
             title = form.title.data,
             price = form.price.data,
             memo = form.memo.data
         )
-
         db.add(book)
         redirect("/books")
-
     else:
         return template('edit', form = form, request = request)
 
 
+# 一覧用のGET
 @get('/books')
 def index(db):
 
@@ -119,7 +114,6 @@ def edit(db, id):
         return HTTPError(404, u'書籍が見つかりません')
 
     form = BookForm(request.POST, book)
-
     return template('edit', book = book, form = form, request = request)
 
 
@@ -135,13 +129,10 @@ def update(db, id):
     form = BookForm(request.forms.decode())
 
     if form.validate():
-
         book.title = form.title.data
         book.price = form.price.data
         book.memo = form.memo.data
-
         redirect("/books")
-
     else:
         return template('edit', form = form, request = request)
 
